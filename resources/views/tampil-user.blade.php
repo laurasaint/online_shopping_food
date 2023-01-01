@@ -5,7 +5,6 @@
 
 <table class="table">
 
-<a href="{{ route("user_input") }}" >Add data</a>
     <thead>
         <tr>
             <th scope="col">#</th>
@@ -27,13 +26,13 @@
             <td>{{$user->created_at}}</td>
             <td>{{$user->updated_at}}</td>
             <td>
-<a href="{{ route("user_edit", ["id"=> $user->id]) }}">edit</a>
-<form action="{{ route("user_hapus",['id' => $user->id]) }}" method="post">
-    @csrf
-    @method("delete")
-    <button type="submit">Hapus</button>
-</from>
-</td>
+                <a href="{{ route("user_edit", ["id"=> $user->id]) }}">edit</a>
+                <form action="{{route('user_hapus',['id'=> $user->id])}}" method="post">
+                    @csrf
+                    @method('delete')
+                    <button type="submit">Hapus {{$user->id}}</button>
+                </form>
+                </td>
         </tr>
         @endforeach
     </tbody>

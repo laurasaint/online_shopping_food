@@ -16,7 +16,7 @@ class KategoriController extends Controller
         $kategori = new Kategori();
         $kategori -> kategori = $request ->get ("kategori");
         $kategori->save();
-        return redirect(route("tampil_kategori",['id'=> $kategori -> id])) ;
+        return redirect(route("semua_kategori")) ;
     }
     public function tampil($id)
     {
@@ -47,6 +47,15 @@ class KategoriController extends Controller
 
         return redirect(route("tampil_kategori",['id'=> $kategori -> id])) ;
     }
+
+    public function filter($id)
+    {
+        $kategori = Kategori::find($id)->first();
+        $makanan = Kategori::join("makanan", "kategori.id", "makanan.id_kategori")->where("makanan.id_kategori", $id)->get(["makanan.*", "kategori.kategori"]);
+        return view ("kategori.filter")->with(["kategori"=>$kategori, "makanan"=>$makanan]);
+
+    }
+
     public function hapus($id)
     {
         Kategori::destroy($id);

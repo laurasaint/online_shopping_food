@@ -4,14 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\KeranjangBelanja;
+use App\Models\Makanan;
 
 class KeranjangBelanjaController extends Controller
 {
-    public function buat()
+    public function simpan($id)
     {
-        return view ("keranjangbelanja.form-input");
+        $makanan = Makanan::find($id);
+        $keranjangbelanja = new KeranjangBelanja();
+        $keranjangbelanja -> total_belanja = $makanan->harga;
+        $keranjangbelanja -> jumlah_pembelian = 1;
+        $keranjangbelanja -> makanan = $makanan->nama_makanan;
+        $keranjangbelanja->save();
+
+        return redirect(route("semua_keranjangbelanja")) ;
+        
+
+        #return view ("keranjangbelanja.form-input",['id'=> $id]));
     }
-    public function simpan( Request $request )
+    public function simpan_bak( Request $request )
     {
         $keranjangbelanja = new KeranjangBelanja();
         $keranjangbelanja -> id = $request ->get ("keranjangbelanja");

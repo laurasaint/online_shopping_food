@@ -3,7 +3,11 @@
 @section("konten")
 
 <h1>Semua Data</h1>
+@if(auth()->user()->level == 1)
+    <a href="{{ route("buat_costumer") }}" >Add Costumer</a>
+@endif
 
+<br><br>
 
 @foreach($data as $costumer)
 Id:  {{$costumer->id}} <br>
@@ -22,3 +26,5 @@ Email:  {{$costumer->email}} <br>
     <hr>
     @endforeach
 @endsection
+
+

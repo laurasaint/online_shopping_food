@@ -13,14 +13,25 @@ class PenjualController extends Controller
     }
     public function simpan( Request $request )
     {
-        $penjual = new Penjual();
-        $penjual -> id = $request ->get ("id");
-        $penjual -> id_user = $request ->get ("id_user");
+
+        $user = new User();
+        $user->name = $request ->get ("nama");
+        $user->username = $request ->get ("username");
+        $user->email = $request ->get ("email");
+        $user->password = $request ->get ("password");
+        $user->level = 1;
+        $user->save();
+
+        $penjual = new Costumer();
+
+        $penjual -> id_user = $user->id;
         $penjual -> no_hp = $request ->get ("no_hp");
         $penjual -> email = $request ->get ("email");
 
         $penjual->save();
+        
         return redirect(route("tampil_penjual",['id'=> $penjual -> id])) ;
+
     }
     public function tampil($id)
     {
@@ -46,8 +57,6 @@ class PenjualController extends Controller
     public function update(Request $request, $id)
     {
         $penjual = Penjual::find($id);
-        $penjual -> id = $request ->get ("id");
-        $penjual -> id_user = $request ->get ("id_user");
         $penjual -> no_hp = $request ->get ("no_hp");
         $penjual -> email = $request ->get ("email");
         $penjual->save();
